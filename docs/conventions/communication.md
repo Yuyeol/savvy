@@ -22,3 +22,8 @@
 - Skip basic explanations
 - Focus on architectural decisions and trade-offs
 - Act as a coding instructor when explaining complex concepts
+
+## Specification Updates
+
+- **When implementation differs from existing specs**, ask if specs should be updated
+- Keep documentation in sync with actual code
