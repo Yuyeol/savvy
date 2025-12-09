@@ -1,11 +1,17 @@
-'use client';
+"use client";
 
-import { Controller, Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import Input from './input';
-import React from 'react';
+import {
+  Controller,
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
+} from "react-hook-form";
+import Input from "./input";
+import React from "react";
 
 interface FormInputProps<T extends FieldValues>
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "name"> {
   name: Path<T>;
   control: Control<T>;
   label: string;
@@ -27,6 +33,7 @@ export default function FormInput<T extends FieldValues>({
       render={({ field, fieldState }) => (
         <Input
           label={label}
+          name={field.name}
           value={field.value}
           onChange={field.onChange}
           onBlur={field.onBlur}

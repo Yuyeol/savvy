@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Controller, Control, FieldValues, Path } from 'react-hook-form';
+import { Controller, Control, FieldValues, Path, FieldError } from 'react-hook-form';
 import { ChevronDown } from 'lucide-react';
 
 interface Folder {
@@ -24,11 +24,13 @@ export default function FolderSelector<T extends FieldValues>({
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
+      rules={{ required: "폴더를 선택해주세요" }}
+      render={({ field, fieldState }) => (
         <FolderSelectorContent
           folders={folders}
           selectedFolderId={field.value}
           onSelectFolder={field.onChange}
+          error={fieldState.error}
         />
       )}
     />
@@ -39,12 +41,14 @@ interface FolderSelectorContentProps {
   folders: Folder[];
   selectedFolderId?: string;
   onSelectFolder: (folderId: string | undefined) => void;
+  error?: FieldError;
 }
 
 function FolderSelectorContent({
   folders,
   selectedFolderId,
   onSelectFolder,
+  error,
 }: FolderSelectorContentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,7 +65,9 @@ function FolderSelectorContent({
       <button
         type="button"
         onClick={() => setIsModalOpen(true)}
-        className="flex items-center justify-between w-full px-4 py-3 border border-border-light rounded-lg bg-background text-foreground"
+        className={`flex items-center justify-between w-full px-4 py-3 border rounded-lg bg-background text-foreground ${
+          error ? 'border-danger' : 'border-border-light'
+        }`}
       >
         <span className="text-sm">
           {selectedFolder ? `📁 ${selectedFolder.name}` : '폴더 없음'}
@@ -130,6 +136,7 @@ function FolderSelectorContent({
           </div>
         </div>
       )}
+      {error?.message && <p className="mt-1 text-sm text-danger">{error.message}</p>}
     </div>
   );
 }

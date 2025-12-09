@@ -33,19 +33,22 @@
 
 ## 컴포넌트 구성
 
-**[URL Input](./components/url-input.md)**
+**FormInput (URL, Title)**
 - URL 입력 필드 (필수)
-- 메타데이터 자동 추출
+- 제목 입력 필드 (필수)
+- 코어 컴포넌트 재사용
 
-**[Title Input](./components/title-input.md)**
-- 제목 입력 필드 (선택)
-
-**[Description Input](./components/description-input.md)**
+**FormTextarea (Description)**
 - 설명 입력 필드 (선택)
+- 코어 컴포넌트 재사용
 
-**[Folder Selector](./components/folder-selector.md)**
-- 폴더 선택 드롭다운
-- 폴더 생성 페이지 랜딩 버튼
+**FolderSelector** (`bookmark/_components/`)
+- 폴더 선택 드롭다운 (필수)
+- 생성/수정 페이지 공용
+
+**CreateFolderButton** (`bookmark/_components/`)
+- 폴더 관리 페이지로 이동
+- 생성/수정 페이지 공용
 
 ---
 

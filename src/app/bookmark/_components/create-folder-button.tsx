@@ -7,7 +7,7 @@ export default function CreateFolderButton() {
   const router = useRouter();
 
   const handleCreateFolder = () => {
-    router.push('/folder/create');
+    router.push('/folder/manage');
   };
 
   return (

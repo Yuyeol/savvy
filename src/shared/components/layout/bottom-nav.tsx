@@ -1,13 +1,18 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { BookMarked, Plus } from 'lucide-react';
 
 export default function BottomNav() {
+  const router = useRouter();
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border-light z-50">
       <div className="flex items-center justify-around h-16 px-4">
         {/* 저장목록 */}
         <button
           onClick={() => {
-            // TODO: 저장목록으로 이동
+            router.push('/');
           }}
           className="flex flex-col items-center gap-1"
         >
@@ -18,7 +23,7 @@ export default function BottomNav() {
         {/* 추가 버튼 */}
         <button
           onClick={() => {
-            // TODO: /items/new 페이지로 이동
+            router.push('/bookmark/create');
           }}
           className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white"
         >

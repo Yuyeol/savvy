@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import Header from '@/shared/components/layout/header';
-import FormInput from '@/shared/components/core/form-input';
-import FormTextarea from '@/shared/components/core/form-textarea';
-import FolderSelector from '@/app/bookmark/create/_components/folder-selector';
-import CreateFolderButton from '@/app/bookmark/create/_components/create-folder-button';
-import Button from '@/shared/components/core/button';
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Header from "@/shared/components/layout/header";
+import FormInput from "@/shared/components/core/form-input";
+import FormTextarea from "@/shared/components/core/form-textarea";
+import FolderSelector from "@/app/bookmark/_components/folder-selector";
+import CreateFolderButton from "@/app/bookmark/_components/create-folder-button";
+import Button from "@/shared/components/core/button";
 
 // TODO: API에서 가져오기
 const MOCK_FOLDERS = [
-  { id: '1', name: '개발 자료' },
-  { id: '2', name: '디자인 레퍼런스' },
-  { id: '3', name: '읽을거리' },
+  { id: "1", name: "개발 자료" },
+  { id: "2", name: "디자인 레퍼런스" },
+  { id: "3", name: "읽을거리" },
 ];
 
 interface BookmarkFormData {
@@ -27,21 +27,21 @@ export default function BookmarkCreatePage() {
   const router = useRouter();
   const { control, handleSubmit } = useForm<BookmarkFormData>({
     defaultValues: {
-      url: '',
-      title: '',
-      description: '',
+      url: "",
+      title: "",
+      description: "",
       folderId: undefined,
     },
   });
 
   const handleCancel = () => {
-    router.push('/');
+    router.push("/");
   };
 
   const onSubmit = async (data: BookmarkFormData) => {
     // TODO: API 호출하여 북마크 저장
     console.log(data);
-    router.push('/');
+    router.push("/");
   };
 
   return (
@@ -58,8 +58,7 @@ export default function BookmarkCreatePage() {
             label="URL"
             type="url"
             placeholder="https://example.com"
-            rules={{ required: 'URL을 입력해주세요' }}
-            required
+            rules={{ required: "URL을 입력해주세요" }}
           />
 
           <FormInput
@@ -68,6 +67,7 @@ export default function BookmarkCreatePage() {
             label="제목"
             placeholder="제목을 입력하세요"
             maxLength={100}
+            rules={{ required: "제목을 입력해주세요" }}
           />
 
           <FormTextarea
@@ -79,7 +79,11 @@ export default function BookmarkCreatePage() {
             rows={3}
           />
 
-          <FolderSelector name="folderId" control={control} folders={MOCK_FOLDERS} />
+          <FolderSelector
+            name="folderId"
+            control={control}
+            folders={MOCK_FOLDERS}
+          />
 
           <CreateFolderButton />
 

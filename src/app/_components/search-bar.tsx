@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { useState } from "react";
+import { Search, X } from "lucide-react";
+import Input from "@/shared/components/core/input";
 
 export default function SearchBar() {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   const handleClear = () => {
-    setSearchValue('');
+    setSearchValue("");
     // TODO: 검색 초기화 API 호출 또는 상태 업데이트
   };
 
@@ -19,19 +20,24 @@ export default function SearchBar() {
   return (
     <div className="w-full px-4 py-3">
       <div className="relative">
-        <div className="flex items-center gap-2 px-4 py-3 border border-border-light rounded-lg bg-background">
-          <Search size={18} className="text-muted" />
-          <input
-            type="text"
-            value={searchValue}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder="검색어 입력..."
-            className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted"
+        <div className="flex items-center relative">
+          <Search
+            size={18}
+            className="text-muted absolute left-3 top-1/2 -translate-y-1/2"
           />
+          <div className="flex-1">
+            <Input
+              name="search"
+              value={searchValue}
+              onChange={(e) => handleSearch(e.target.value)}
+              placeholder="검색어 입력..."
+              className="px-9"
+            />
+          </div>
           {searchValue && (
             <button
               onClick={handleClear}
-              className="text-muted"
+              className="text-muted absolute right-3 top-1/2 -translate-y-1/2"
             >
               <X size={18} />
             </button>
