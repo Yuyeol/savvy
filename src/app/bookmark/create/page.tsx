@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Header from "@/shared/components/layout/header";
 import FormInput from "@/shared/components/core/form-input";
 import FormTextarea from "@/shared/components/core/form-textarea";
 import FolderSelector from "@/app/bookmark/_components/folder-selector";
@@ -46,9 +45,7 @@ export default function BookmarkCreatePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
-      <div className="pt-14 px-4 py-6">
+      <div className="px-4 py-6">
         <h1 className="text-2xl font-bold text-foreground mb-6">링크 추가</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
