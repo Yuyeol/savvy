@@ -21,6 +21,7 @@
 - **[Code Quality](.claude/docs/code-quality.md)** - 코딩 표준
 - **[Architecture](.claude/docs/architecture.md)** - 디렉토리 구조 및 아키텍처
 - **[State Management](.claude/docs/state-management.md)** - React Query, useState, Zustand, searchParams
+- **[UI Guidelines](.claude/docs/ui-guidelines.md)** - UI 구현 규칙
 
 ## Project Specifications
 

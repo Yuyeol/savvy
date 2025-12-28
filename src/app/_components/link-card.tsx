@@ -1,6 +1,8 @@
 'use client';
 
 import { Star, MoreVertical } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Dropdown, { DropdownOption } from '@/shared/components/core/dropdown';
 
 type LinkCardProps = {
   id: string;
@@ -14,6 +16,7 @@ type LinkCardProps = {
 };
 
 export default function LinkCard({
+  id,
   title,
   description,
   createdAt,
@@ -21,8 +24,11 @@ export default function LinkCard({
   thumbnail,
   isFavorite,
 }: LinkCardProps) {
+  const router = useRouter();
+
   const handleCardClick = () => {
-    // TODO: /items/[id] 페이지로 이동
+    // TODO: /bookmark/[id] 페이지로 이동
+    router.push(`/bookmark/${id}`);
   };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
@@ -30,10 +36,22 @@ export default function LinkCard({
     // TODO: 즐겨찾기 토글 API 호출
   };
 
-  const handleMoreClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // TODO: 더보기 드롭다운 표시 (수정/삭제)
-  };
+  const dropdownOptions: DropdownOption[] = [
+    {
+      label: '수정',
+      value: 'edit',
+      onClick: () => router.push(`/bookmark/${id}/edit`),
+    },
+    {
+      label: '삭제',
+      value: 'delete',
+      variant: 'danger',
+      onClick: () => {
+        // TODO: 삭제 확인 모달 + API 호출
+        console.log('삭제:', id);
+      },
+    },
+  ];
 
   return (
     <div
@@ -73,12 +91,14 @@ export default function LinkCard({
                 className={isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-muted'}
               />
             </button>
-            <button
-              onClick={handleMoreClick}
-              className="text-muted"
-            >
-              <MoreVertical size={20} />
-            </button>
+            <Dropdown
+              trigger={
+                <button className="text-muted">
+                  <MoreVertical size={20} />
+                </button>
+              }
+              options={dropdownOptions}
+            />
           </div>
 
           {/* 하단: 썸네일 */}
