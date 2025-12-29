@@ -9,12 +9,13 @@
 - 페이지 5개
 - 폼 처리, 라우팅, 드롭다운 메뉴
 
-### [Phase 2: Backend 구축](phase2-backend.md) 🔄
+### [Phase 2: Backend 구축](phase2-backend.md) ✅
 
-- Supabase 설정 (완료)
-- DB 테이블 생성 (완료)
-- Supabase 클라이언트 설정 (다음 작업)
-- API Routes 10개 (대기)
+- Supabase 설정 완료
+- DB 테이블 생성 완료
+- Supabase 클라이언트 설정 완료
+- API 유틸리티 (에러 처리, 검증) 완료
+- API Routes 10개 완료 (Folders 4개, Bookmarks 6개)
 - 인증 (Phase 2.4, 추후)
 
 ### [Phase 3: Frontend 기능 구현](phase3-frontend.md) ⏳

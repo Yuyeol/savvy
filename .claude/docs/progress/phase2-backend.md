@@ -1,22 +1,8 @@
 # Phase 2: Backend 구축
 
-## 현재 상태
-
-- [x] Supabase 프로젝트 생성
-- [x] DB 테이블 생성 (folders, bookmarks)
-- [x] 환경변수 설정 (.env.local)
-- [ ] Supabase 클라이언트 설정
-- [ ] API Routes (10개)
-
 ---
 
 ## Supabase 클라이언트 설정
-
-### 패키지
-
-```bash
-pnpm add @supabase/supabase-js
-```
 
 ### 임시 user_id
 
