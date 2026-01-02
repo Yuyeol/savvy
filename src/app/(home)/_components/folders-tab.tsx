@@ -1,10 +1,30 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import FolderCard from "@/app/(home)/_components/folder-card";
 import { useGetFolders } from "@/shared/hooks/queries/folders/useGetFolders";
 
 export default function FoldersTab() {
-  const { data: folders = [], isLoading: isFoldersLoading } = useGetFolders();
+  const searchParams = useSearchParams();
+  const sort = searchParams.get("sort") || undefined;
+
+  // Sort 값에 따라 sort, order 파라미터 결정
+  const getSortParams = () => {
+    switch (sort) {
+      case "latest":
+        return { sort: "created_at", order: "desc" as const };
+      case "oldest":
+        return { sort: "created_at", order: "asc" as const };
+      case "name":
+        return { sort: "name", order: "asc" as const };
+      default:
+        return { sort: "created_at", order: "desc" as const };
+    }
+  };
+
+  const sortParams = getSortParams();
+
+  const { data: folders = [], isLoading: isFoldersLoading } = useGetFolders(sortParams);
 
   return (
     <div className="grid grid-cols-2 gap-3">

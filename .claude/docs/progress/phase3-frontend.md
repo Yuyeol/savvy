@@ -46,8 +46,10 @@
 
 - [x] URL searchParams로 상태 관리
 - [x] 정렬 옵션 선택 → URL 업데이트
-- [x] GET /api/bookmarks?sort=xxx&order=xxx
+- [x] GET /api/bookmarks?sort=xxx&order=xxx (북마크)
+- [x] GET /api/folders?sort=xxx&order=xxx (폴더)
 - [x] 최신순/오래된순/가나다순 구현
+- [x] 폴더보기 탭에서 정렬 적용
 
 ### 필터
 
@@ -57,6 +59,8 @@
 - [x] 즐겨찾기 필터
 - [x] GET /api/bookmarks?is_favorite=true
 - [x] 즐겨찾기 토글 버튼 UI (홈 페이지)
+- [x] 전체보기 탭에서만 폴더 필터/즐겨찾기 토글 표시
+- [x] 폴더보기 탭에서는 정렬만 표시
 
 ### 즐겨찾기
 

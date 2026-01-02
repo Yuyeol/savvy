@@ -11,8 +11,16 @@ import {
 import { fetcher } from "@/shared/utils/api/fetcher";
 
 // GET /api/folders
-export async function getFolders(): Promise<Folder[]> {
-  const url = "/api/folders";
+export async function getFolders(params?: {
+  sort?: string;
+  order?: "asc" | "desc";
+}): Promise<Folder[]> {
+  const searchParams = new URLSearchParams();
+
+  if (params?.sort) searchParams.append("sort", params.sort);
+  if (params?.order) searchParams.append("order", params.order);
+
+  const url = `/api/folders${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
   const response = await fetcher(url, foldersGetResponse);
   return response.data;
 }

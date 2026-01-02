@@ -85,22 +85,26 @@ export default function Home() {
             onChange={handleSortChange}
             modalTitle="정렬"
           />
-          <ModalSelector
-            options={folderOptions}
-            value={currentFolderId}
-            onChange={handleFolderChange}
-            modalTitle="폴더"
-          />
-          <button
-            onClick={handleFavoriteToggle}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-              isFavoriteFilter
-                ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-700"
-                : "bg-background text-foreground border border-border-light"
-            }`}
-          >
-            ⭐ 즐겨찾기
-          </button>
+          {activeView === "all" && (
+            <>
+              <ModalSelector
+                options={folderOptions}
+                value={currentFolderId}
+                onChange={handleFolderChange}
+                modalTitle="폴더"
+              />
+              <button
+                onClick={handleFavoriteToggle}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isFavoriteFilter
+                    ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-700"
+                    : "bg-background text-foreground border border-border-light"
+                }`}
+              >
+                ⭐ 즐겨찾기
+              </button>
+            </>
+          )}
         </div>
         {activeView === "all" ? (
           // 전체보기: 링크 카드 1-column

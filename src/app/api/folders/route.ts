@@ -6,16 +6,21 @@ import { handleSupabaseError } from "@/app/api/_utils/supabase-errors";
 import { withErrorHandler } from "@/app/api/_utils/api-handler";
 import { validateRequired } from "@/app/api/_utils/validation";
 
-export const GET = withErrorHandler(async () => {
+export const GET = withErrorHandler(async (request: NextRequest) => {
   const supabase = await createClient();
   const userId = getUserId();
+
+  // URL 파라미터 추출
+  const { searchParams } = new URL(request.url);
+  const sort = searchParams.get("sort") || "created_at";
+  const order = searchParams.get("order") || "desc";
 
   // 폴더 조회
   const { data: folders, error } = await supabase
     .from("folders")
     .select("*")
     .eq("user_id", userId)
-    .order("created_at", { ascending: false });
+    .order(sort, { ascending: order === "asc" });
 
   if (error) {
     return handleSupabaseError(error, "Folders");
