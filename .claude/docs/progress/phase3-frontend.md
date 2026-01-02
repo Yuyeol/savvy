@@ -91,10 +91,10 @@
 
 ### 커스텀 훅
 
-- [ ] useBookmarks (목록, 검색, 필터)
-- [ ] useBookmark (단일 조회)
-- [ ] useCreateBookmark
-- [ ] useUpdateBookmark
+- [ ] useGetBookmarks (목록, 검색, 필터)
+- [ ] useGetBookmark (단일 조회)
+- [ ] usePostBookmark
+- [ ] usePatchBookmark
 - [ ] useDeleteBookmark
 - [x] useGetFolders
 - [x] usePostFolder

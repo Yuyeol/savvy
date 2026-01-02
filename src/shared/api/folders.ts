@@ -1,26 +1,14 @@
-import { z } from "zod";
 import {
-  folderSchema,
   folderPostRequestSchema,
   folderPatchRequestSchema,
+  foldersGetResponse,
+  folderPostResponse,
+  folderPatchResponse,
   type Folder,
   type FolderPostRequest,
   type FolderPatchRequest,
 } from "@/shared/api/schemas/folder.schema";
 import { fetcher } from "@/shared/utils/api/fetcher";
-
-// Response schemas (API가 { data: T } 형식으로 반환)
-const foldersGetResponse = z.object({
-  data: z.array(folderSchema),
-});
-
-const folderPostResponse = z.object({
-  data: folderSchema,
-});
-
-const folderPatchResponse = z.object({
-  data: folderSchema,
-});
 
 // GET /api/folders
 export async function getFolders(): Promise<Folder[]> {
