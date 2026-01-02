@@ -5,20 +5,31 @@ import Link from "next/link";
 import { ExternalLink, MoreVertical } from "lucide-react";
 import Text from "@/shared/components/core/text";
 import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
+import { useGetBookmark } from "@/shared/hooks/queries/bookmarks/useGetBookmark";
+import { useDeleteBookmark } from "@/shared/hooks/queries/bookmarks/useDeleteBookmark";
+import { useGetFolders } from "@/shared/hooks/queries/folders/useGetFolders";
 
 export default function BookmarkDetailPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  // TODO: API에서 북마크 데이터 가져오기
-  const bookmark = {
-    id: "1",
-    title: "북마크 제목 예시",
-    url: "https://example.com",
-    description: "북마크 설명 텍스트입니다.",
-    folder: "개발",
-    createdAt: "2024.12.28",
+  const { data: bookmark, isLoading } = useGetBookmark({ id });
+  const { data: folders = [] } = useGetFolders();
+  const deleteBookmark = useDeleteBookmark();
+
+  const handleDelete = () => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      deleteBookmark.mutate(id, {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (error) => {
+          console.error("Failed to delete bookmark:", error);
+          alert("북마크 삭제에 실패했습니다.");
+        },
+      });
+    }
   };
 
   const dropdownOptions: DropdownOption[] = [
@@ -31,12 +42,32 @@ export default function BookmarkDetailPage() {
       label: "삭제",
       value: "delete",
       variant: "danger",
-      onClick: () => {
-        // TODO: 삭제 확인 모달 + API 호출
-        console.log("삭제:", id);
-      },
+      onClick: handleDelete,
     },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted">로딩 중...</p>
+      </div>
+    );
+  }
+
+  if (!bookmark) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted">북마크를 찾을 수 없습니다.</p>
+      </div>
+    );
+  }
+
+  const folder = folders.find((f) => f.id === bookmark.folder_id);
+  const formattedDate = new Date(bookmark.created_at).toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).replace(/\. /g, ".").replace(/\.$/, "");
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -56,7 +87,7 @@ export default function BookmarkDetailPage() {
           />
         </div>
         <Text variant="body-3" className="text-muted">
-          {bookmark.createdAt}
+          {formattedDate}
         </Text>
       </div>
 
@@ -93,7 +124,7 @@ export default function BookmarkDetailPage() {
           <Text variant="body-3" className="text-muted">
             폴더
           </Text>
-          <Text variant="body-2">{bookmark.folder || "미분류"}</Text>
+          <Text variant="body-2">{folder?.name || "미분류"}</Text>
         </div>
       </div>
     </div>
