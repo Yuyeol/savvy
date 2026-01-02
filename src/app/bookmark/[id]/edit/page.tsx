@@ -8,22 +8,8 @@ import FormTextarea from "@/shared/components/core/form-textarea";
 import FolderSelector from "@/app/bookmark/_components/folder-selector";
 import CreateFolderButton from "@/app/bookmark/_components/create-folder-button";
 import Button from "@/shared/components/core/button";
-
-// TODO: API에서 가져오기
-const MOCK_FOLDERS = [
-  { id: "1", name: "개발 자료" },
-  { id: "2", name: "디자인 레퍼런스" },
-  { id: "3", name: "읽을거리" },
-];
-
-// TODO: API에서 가져온 데이터
-const MOCK_BOOKMARK = {
-  id: "1",
-  url: "https://nextjs.org/docs",
-  title: "Next.js 공식 문서",
-  description: "The React Framework for the Web",
-  folderId: "1",
-};
+import { useGetBookmark } from "@/shared/hooks/queries/bookmarks/useGetBookmark";
+import { usePatchBookmark } from "@/shared/hooks/queries/bookmarks/usePatchBookmark";
 
 interface BookmarkFormData {
   url: string;
@@ -37,6 +23,9 @@ export default function BookmarkEditPage() {
   const params = useParams();
   const bookmarkId = params.id as string;
 
+  const { data: bookmark, isLoading } = useGetBookmark({ id: bookmarkId });
+  const patchBookmark = usePatchBookmark();
+
   const { control, handleSubmit, reset } = useForm<BookmarkFormData>({
     defaultValues: {
       url: "",
@@ -47,24 +36,58 @@ export default function BookmarkEditPage() {
   });
 
   useEffect(() => {
-    // TODO: API 호출하여 북마크 데이터 가져오기
-    reset({
-      url: MOCK_BOOKMARK.url,
-      title: MOCK_BOOKMARK.title,
-      description: MOCK_BOOKMARK.description,
-      folderId: MOCK_BOOKMARK.folderId,
-    });
-  }, [bookmarkId, reset]);
+    if (bookmark) {
+      reset({
+        url: bookmark.url,
+        title: bookmark.title,
+        description: bookmark.description || "",
+        folderId: bookmark.folder_id || undefined,
+      });
+    }
+  }, [bookmark, reset]);
 
   const handleCancel = () => {
     router.push("/");
   };
 
   const onSubmit = async (data: BookmarkFormData) => {
-    // TODO: API 호출하여 북마크 수정
-    console.log("Update bookmark:", bookmarkId, data);
-    router.push("/");
+    patchBookmark.mutate(
+      {
+        id: bookmarkId,
+        request: {
+          url: data.url,
+          title: data.title,
+          description: data.description,
+          folder_id: data.folderId || null,
+        },
+      },
+      {
+        onSuccess: () => {
+          router.push(`/bookmark/${bookmarkId}`);
+        },
+        onError: (error) => {
+          console.error("Failed to update bookmark:", error);
+          alert("북마크 수정에 실패했습니다.");
+        },
+      }
+    );
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted">로딩 중...</p>
+      </div>
+    );
+  }
+
+  if (!bookmark) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted">북마크를 찾을 수 없습니다.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -99,11 +122,7 @@ export default function BookmarkEditPage() {
             rows={3}
           />
 
-          <FolderSelector
-            name="folderId"
-            control={control}
-            folders={MOCK_FOLDERS}
-          />
+          <FolderSelector name="folderId" control={control} />
 
           <CreateFolderButton />
 
@@ -111,8 +130,8 @@ export default function BookmarkEditPage() {
             <Button type="button" variant="neutral" onClick={handleCancel}>
               취소
             </Button>
-            <Button type="submit" variant="primary">
-              수정
+            <Button type="submit" variant="primary" disabled={patchBookmark.isPending}>
+              {patchBookmark.isPending ? "수정 중..." : "수정"}
             </Button>
           </div>
         </form>
