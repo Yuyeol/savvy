@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
 import { MoreVertical } from "lucide-react";
+import { useDeleteFolder } from "@/shared/hooks/queries/folders/useDeleteFolder";
 
 interface Props {
   id: string;
@@ -12,10 +13,25 @@ interface Props {
 
 export default function FolderCard({ id, name, itemCount }: Props) {
   const router = useRouter();
+  const deleteFolder = useDeleteFolder();
 
   const handleCardClick = () => {
     // 전체보기 탭으로 전환 + 해당 폴더 필터링
     router.push(`/?folder_id=${id}`);
+  };
+
+  const handleDelete = () => {
+    if (confirm(`"${name}" 폴더를 삭제하시겠습니까?`)) {
+      deleteFolder.mutate(id, {
+        onSuccess: () => {
+          // 성공 시 React Query가 자동으로 목록 갱신
+        },
+        onError: (error) => {
+          alert("폴더 삭제에 실패했습니다.");
+          console.error(error);
+        },
+      });
+    }
   };
 
   const dropdownOptions: DropdownOption[] = [
@@ -28,10 +44,7 @@ export default function FolderCard({ id, name, itemCount }: Props) {
       label: "삭제",
       value: "delete",
       variant: "danger",
-      onClick: () => {
-        // TODO: 삭제 확인 모달 + API 호출
-        console.log("폴더 삭제:", id);
-      },
+      onClick: handleDelete,
     },
   ];
 

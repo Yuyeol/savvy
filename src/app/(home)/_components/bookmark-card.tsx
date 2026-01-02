@@ -4,6 +4,7 @@ import { Star, MoreVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
 import Image from "next/image";
+import { useDeleteBookmark } from "@/shared/hooks/queries/bookmarks/useDeleteBookmark";
 
 interface Props {
   id: string;
@@ -26,15 +27,29 @@ export default function BookmarkCard({
   isFavorite,
 }: Props) {
   const router = useRouter();
+  const deleteBookmark = useDeleteBookmark();
 
   const handleCardClick = () => {
-    // TODO: /bookmark/[id] 페이지로 이동
     router.push(`/bookmark/${id}`);
   };
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     // TODO: 즐겨찾기 토글 API 호출
+  };
+
+  const handleDelete = () => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      deleteBookmark.mutate(id, {
+        onSuccess: () => {
+          // 성공 시 아무것도 하지 않음 (React Query가 자동으로 목록 갱신)
+        },
+        onError: (error) => {
+          alert("삭제에 실패했습니다.");
+          console.error(error);
+        },
+      });
+    }
   };
 
   const dropdownOptions: DropdownOption[] = [
@@ -47,10 +62,7 @@ export default function BookmarkCard({
       label: "삭제",
       value: "delete",
       variant: "danger",
-      onClick: () => {
-        // TODO: 삭제 확인 모달 + API 호출
-        console.log("삭제:", id);
-      },
+      onClick: handleDelete,
     },
   ];
 

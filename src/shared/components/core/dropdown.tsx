@@ -38,7 +38,8 @@ export default function Dropdown({ trigger, options, align = "right" }: Props) {
     };
   }, [isOpen]);
 
-  const handleOptionClick = (option: DropdownOption) => {
+  const handleOptionClick = (e: React.MouseEvent, option: DropdownOption) => {
+    e.stopPropagation();
     option.onClick();
     setIsOpen(false);
   };
@@ -59,11 +60,12 @@ export default function Dropdown({ trigger, options, align = "right" }: Props) {
           className={`absolute top-full mt-1 z-10 min-w-[120px] rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg ${
             align === "right" ? "right-0" : "left-0"
           }`}
+          onClick={(e) => e.stopPropagation()}
         >
           {options.map((option, index) => (
             <button
               key={option.value}
-              onClick={() => handleOptionClick(option)}
+              onClick={(e) => handleOptionClick(e, option)}
               className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
                 index === 0 ? "rounded-t-lg" : ""
               } ${index === options.length - 1 ? "rounded-b-lg" : ""} ${

@@ -64,9 +64,10 @@
 
 ### 삭제
 
-- [ ] 확인 모달 구현
-- [x] DELETE /api/bookmarks/[id] (API 연동 완료, UI 확인 필요)
-- [x] DELETE /api/folders/[id] (완료)
+- [x] 확인 모달 구현 (네이티브 confirm 다이얼로그 사용)
+- [x] DELETE /api/bookmarks/[id] (완료 - 북마크 카드)
+- [x] DELETE /api/folders/[id] (완료 - 폴더 카드)
+- [x] 드롭다운 이벤트 전파 방지 처리
 
 ---
 
