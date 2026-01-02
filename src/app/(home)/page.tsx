@@ -19,6 +19,7 @@ export default function Home() {
   const activeView = (searchParams.get("view") as "all" | "folders") || "all";
   const currentFolderId = searchParams.get("folder_id") || "all";
   const currentSort = (searchParams.get("sort") as SortType) || "latest";
+  const isFavoriteFilter = searchParams.get("is_favorite") === "true";
 
   const sortOptions = [
     { value: "latest" as SortType, label: "최신순" },
@@ -58,6 +59,18 @@ export default function Home() {
     router.push(`/?${params.toString()}`, { scroll: false });
   };
 
+  const handleFavoriteToggle = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (isFavoriteFilter) {
+      params.delete("is_favorite");
+    } else {
+      params.set("is_favorite", "true");
+    }
+
+    router.push(`/?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <SearchBar />
@@ -78,6 +91,16 @@ export default function Home() {
             onChange={handleFolderChange}
             modalTitle="폴더"
           />
+          <button
+            onClick={handleFavoriteToggle}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              isFavoriteFilter
+                ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-700"
+                : "bg-background text-foreground border border-border-light"
+            }`}
+          >
+            ⭐ 즐겨찾기
+          </button>
         </div>
         {activeView === "all" ? (
           // 전체보기: 링크 카드 1-column

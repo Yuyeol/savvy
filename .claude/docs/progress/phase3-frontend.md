@@ -54,13 +54,14 @@
 - [x] 폴더별 필터링
 - [x] GET /api/bookmarks?folder_id=xxx
 - [x] 폴더 셀렉트박스 UI 구현 (ModalSelector)
-- [ ] 즐겨찾기 필터
-- [ ] GET /api/bookmarks?is_favorite=true
+- [x] 즐겨찾기 필터
+- [x] GET /api/bookmarks?is_favorite=true
+- [x] 즐겨찾기 토글 버튼 UI (홈 페이지)
 
 ### 즐겨찾기
 
-- [ ] POST /api/bookmarks/[id]/favorite
-- [ ] UI 즉시 업데이트 (낙관적 업데이트)
+- [x] POST /api/bookmarks/[id]/favorite (API 연동 완료)
+- [x] 북마크 카드 별표 클릭 시 즐겨찾기 토글
 
 ### 삭제
 
@@ -107,7 +108,7 @@
 - [x] usePostFolder
 - [x] usePatchFolder
 - [x] useDeleteFolder
-- [ ] useToggleFavorite (미구현)
+- [x] usePostFavorite
 
 ### 고급 기능
 

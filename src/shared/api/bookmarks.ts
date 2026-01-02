@@ -25,9 +25,12 @@ export async function getBookmarks(params?: {
   if (params?.sort) searchParams.append("sort", params.sort);
   if (params?.order) searchParams.append("order", params.order);
   if (params?.folder_id) searchParams.append("folder_id", params.folder_id);
-  if (params?.is_favorite !== undefined) searchParams.append("is_favorite", String(params.is_favorite));
+  if (params?.is_favorite !== undefined)
+    searchParams.append("is_favorite", String(params.is_favorite));
 
-  const url = `/api/bookmarks${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+  const url = `/api/bookmarks${
+    searchParams.toString() ? `?${searchParams.toString()}` : ""
+  }`;
   const response = await fetcher(url, bookmarksGetResponse);
   return response.data;
 }
@@ -40,7 +43,9 @@ export async function getBookmark(id: string): Promise<Bookmark> {
 }
 
 // POST /api/bookmarks (생성)
-export async function postBookmark(request: BookmarkPostRequest): Promise<Bookmark> {
+export async function postBookmark(
+  request: BookmarkPostRequest
+): Promise<Bookmark> {
   const validated = bookmarkPostRequestSchema.parse(request);
 
   const url = "/api/bookmarks";
@@ -82,6 +87,16 @@ export async function deleteBookmark(id: string): Promise<void> {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.error || "Failed to delete bookmark");
   }
+}
+
+// POST /api/bookmarks/[id]/favorite (즐겨찾기 토글)
+export async function postFavorite(id: string): Promise<Bookmark> {
+  const url = `/api/bookmarks/${id}/favorite`;
+  const response = await fetcher(url, bookmarkPostResponse, {
+    method: "POST",
+  });
+
+  return response.data;
 }
 
 // Re-export types

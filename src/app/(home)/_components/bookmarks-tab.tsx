@@ -10,6 +10,7 @@ export default function BookmarksTab() {
   const search = searchParams.get("search") || undefined;
   const folderId = searchParams.get("folder_id") || undefined;
   const sort = searchParams.get("sort") || undefined;
+  const isFavorite = searchParams.get("is_favorite") === "true" ? true : undefined;
 
   // Sort 값에 따라 sort, order 파라미터 결정
   const getSortParams = () => {
@@ -33,6 +34,7 @@ export default function BookmarksTab() {
       folder_id: folderId,
       sort: sortParams.sort,
       order: sortParams.order,
+      is_favorite: isFavorite,
     });
 
   return (

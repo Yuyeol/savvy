@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
 import Image from "next/image";
 import { useDeleteBookmark } from "@/shared/hooks/queries/bookmarks/useDeleteBookmark";
+import { usePostFavorite } from "@/shared/hooks/queries/bookmarks/usePostFavorite";
 
 interface Props {
   id: string;
@@ -28,6 +29,7 @@ export default function BookmarkCard({
 }: Props) {
   const router = useRouter();
   const deleteBookmark = useDeleteBookmark();
+  const toggleFavorite = usePostFavorite();
 
   const handleCardClick = () => {
     router.push(`/bookmark/${id}`);
@@ -35,7 +37,15 @@ export default function BookmarkCard({
 
   const handleFavoriteToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // TODO: 즐겨찾기 토글 API 호출
+    toggleFavorite.mutate(id, {
+      onSuccess: () => {
+        // 성공 시 React Query가 자동으로 목록 갱신
+      },
+      onError: (error) => {
+        alert("즐겨찾기 토글에 실패했습니다.");
+        console.error(error);
+      },
+    });
   };
 
   const handleDelete = () => {
