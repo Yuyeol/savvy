@@ -1,6 +1,6 @@
 # Savvy 프로젝트 전체 진행 상황
 
-## Phase별 상세 문서
+## 메인 Phase
 
 ### [Phase 1: UI Prototyping](phase1-ui-prototyping.md) ✅
 
@@ -25,3 +25,15 @@
 - React Query 설정
 - 커스텀 훅
 - 낙관적 업데이트
+
+---
+
+## 개선 작업 (곁가지)
+
+### [쿼리 파라미터 리팩토링](query-params-refactoring.md) ⏳
+
+- **Phase 1**: useQueryParam/useSetQueryParams 훅 적용 ✅
+  - 5개 파일 완료, 코드 62% 간결화
+- **Phase 2**: buildUrlWithParams 유틸 적용 (진행 중)
+  - API Layer: 2곳
+  - UI Layer: 2곳
