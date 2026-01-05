@@ -11,7 +11,7 @@ interface RouteContext {
 
 export const POST = withErrorHandler(async (_request: NextRequest, context?: RouteContext) => {
   const supabase = await createClient();
-  const userId = getUserId();
+  const userId = await getUserId();
   const { id } = await context!.params;
 
   // 현재 북마크 조회

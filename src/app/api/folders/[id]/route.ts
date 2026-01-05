@@ -13,7 +13,7 @@ interface RouteContext {
 export const PATCH = withErrorHandler(
   async (request: NextRequest, context?: RouteContext) => {
     const supabase = await createClient();
-    const userId = getUserId();
+    const userId = await getUserId();
     const { id } = await context!.params;
     const body = await request.json();
 
@@ -42,7 +42,7 @@ export const PATCH = withErrorHandler(
 export const DELETE = withErrorHandler(
   async (_request: NextRequest, context?: RouteContext) => {
     const supabase = await createClient();
-    const userId = getUserId();
+    const userId = await getUserId();
     const { id } = await context!.params;
 
     const { error } = await supabase

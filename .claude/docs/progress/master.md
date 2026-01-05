@@ -18,10 +18,17 @@
 - API Routes 10개 완료 (Folders 4개, Bookmarks 6개)
 - 인증 (Phase 2.4, 추후)
 
-### [Phase 3: Frontend 기능 구현](phase3-frontend.md) ⏳
+### [Phase 3: Frontend 기능 구현](phase3-frontend.md) ✅
 
 - Mock 데이터 → API 연동
 - 검색/정렬/필터 로직
 - React Query 설정
 - 커스텀 훅
 - 낙관적 업데이트
+
+### [Phase 4: 인증 및 프로필](phase4-auth-profile.md) ⏳
+
+- Google OAuth 설정
+- 로그인 페이지
+- RLS 정책 업데이트
+- 마이페이지 (사용자 정보, 통계)

@@ -8,7 +8,7 @@ import { validateRequired } from "@/app/api/_utils/validation";
 
 export const GET = withErrorHandler(async (request: NextRequest) => {
   const supabase = await createClient();
-  const userId = getUserId();
+  const userId = await getUserId();
 
   // URL 파라미터 추출
   const { searchParams } = new URL(request.url);
@@ -55,7 +55,7 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
 
 export const POST = withErrorHandler(async (request: NextRequest) => {
   const supabase = await createClient();
-  const userId = getUserId();
+  const userId = await getUserId();
   const body = await request.json();
 
   const { name } = body;
