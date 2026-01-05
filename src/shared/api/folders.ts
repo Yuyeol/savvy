@@ -9,6 +9,7 @@ import {
   type FolderPatchRequest,
 } from "@/shared/api/schemas/folder.schema";
 import { fetcher } from "@/shared/utils/api/fetcher";
+import { buildUrlWithParams } from "@/shared/utils/buildUrlWithParams";
 
 // GET /api/folders
 export async function getFolders(params: {
@@ -16,13 +17,7 @@ export async function getFolders(params: {
   sort: string | null;
   order: "asc" | "desc" | null;
 }): Promise<Folder[]> {
-  const searchParams = new URLSearchParams();
-
-  if (params.search) searchParams.append("search", params.search);
-  if (params.sort) searchParams.append("sort", params.sort);
-  if (params.order) searchParams.append("order", params.order);
-
-  const url = `/api/folders${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+  const url = buildUrlWithParams("/api/folders", params);
   const response = await fetcher(url, foldersGetResponse);
   return response.data;
 }

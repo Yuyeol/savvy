@@ -10,6 +10,7 @@ import {
   type BookmarkPatchRequest,
 } from "@/shared/api/schemas/bookmark.schema";
 import { fetcher } from "@/shared/utils/api/fetcher";
+import { buildUrlWithParams } from "@/shared/utils/buildUrlWithParams";
 
 // GET /api/bookmarks (목록 조회, 검색/필터 지원)
 export async function getBookmarks(params: {
@@ -19,18 +20,7 @@ export async function getBookmarks(params: {
   folder_id: string | null;
   is_favorite: boolean | null;
 }): Promise<Bookmark[]> {
-  const searchParams = new URLSearchParams();
-
-  if (params.search) searchParams.append("search", params.search);
-  if (params.sort) searchParams.append("sort", params.sort);
-  if (params.order) searchParams.append("order", params.order);
-  if (params.folder_id) searchParams.append("folder_id", params.folder_id);
-  if (params.is_favorite !== null)
-    searchParams.append("is_favorite", String(params.is_favorite));
-
-  const url = `/api/bookmarks${
-    searchParams.toString() ? `?${searchParams.toString()}` : ""
-  }`;
+  const url = buildUrlWithParams("/api/bookmarks", params);
   const response = await fetcher(url, bookmarksGetResponse);
   return response.data;
 }

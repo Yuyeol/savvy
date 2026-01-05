@@ -3,9 +3,8 @@
  * null, undefined, 빈 문자열은 자동으로 필터링됩니다.
  *
  * @param basePath - 베이스 URL 경로 (예: '/api/folders')
- * @param params - 쿼리 파라미터 객체 (최소 1개 이상의 유효한 값 필요)
- * @returns 생성된 URL 문자열
- * @throws {Error} 유효한 파라미터가 하나도 없는 경우
+ * @param params - 쿼리 파라미터 객체
+ * @returns 생성된 URL 문자열 (유효한 파라미터가 없으면 basePath만 반환)
  *
  * @example
  * buildUrlWithParams('/api/folders', {
@@ -14,6 +13,13 @@
  *   order: 'asc'
  * })
  * // 결과: '/api/folders?search=test&order=asc'
+ *
+ * @example
+ * buildUrlWithParams('/api/bookmarks', {
+ *   search: null,
+ *   folder_id: null
+ * })
+ * // 결과: '/api/bookmarks'
  */
 export function buildUrlWithParams(
   basePath: string,
@@ -27,11 +33,9 @@ export function buildUrlWithParams(
     }
   }
 
-  // 유효한 파라미터가 없으면 에러
+  // 유효한 파라미터가 없으면 basePath만 반환
   if (Object.keys(validParams).length === 0) {
-    throw new Error(
-      `buildUrlWithParams: 최소 1개 이상의 유효한 파라미터가 필요합니다. (basePath: ${basePath})`
-    );
+    return basePath;
   }
 
   const searchParams = new URLSearchParams(

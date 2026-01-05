@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
 import { MoreVertical } from "lucide-react";
 import { useDeleteFolder } from "@/shared/hooks/queries/folders/useDeleteFolder";
+import { buildUrlWithParams } from "@/shared/utils/buildUrlWithParams";
 
 interface Props {
   id: string;
@@ -17,7 +18,7 @@ export default function FolderCard({ id, name, itemCount }: Props) {
 
   const handleCardClick = () => {
     // 전체보기 탭으로 전환 + 해당 폴더 필터링
-    router.push(`/?folder_id=${id}`);
+    router.push(buildUrlWithParams("/", { folder_id: id }));
   };
 
   const handleDelete = () => {
@@ -38,7 +39,7 @@ export default function FolderCard({ id, name, itemCount }: Props) {
     {
       label: "수정",
       value: "edit",
-      onClick: () => router.push(`/folder/manage?edit=${id}`),
+      onClick: () => router.push(buildUrlWithParams("/folder/manage", { edit: id })),
     },
     {
       label: "삭제",
