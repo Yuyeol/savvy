@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ModalSelector from "@/shared/components/core/modal-selector";
+import DropdownSelect from "@/shared/components/dropdown/dropdown-select";
 
 type SortType = "latest" | "oldest" | "name";
 
@@ -21,11 +21,10 @@ export default function SortSelector() {
 
   return (
     <div className="w-full px-4 py-3">
-      <ModalSelector
+      <DropdownSelect
         options={sortOptions}
         value={currentSort}
         onChange={handleSortChange}
-        modalTitle="정렬"
       />
     </div>
   );

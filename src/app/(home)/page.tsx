@@ -4,7 +4,7 @@ import SearchBar from "@/app/(home)/_components/search-bar";
 import ViewTabs from "@/app/(home)/_components/view-tabs";
 import FoldersTab from "@/app/(home)/_components/folders-tab";
 import BookmarksTab from "@/app/(home)/_components/bookmarks-tab";
-import ModalSelector from "@/shared/components/core/modal-selector";
+import DropdownSelect from "@/shared/components/dropdown/dropdown-select";
 import { useGetFolders } from "@/shared/hooks/queries/folders/useGetFolders";
 import { useQueryParam } from "@/shared/hooks/useQueryParam";
 import { useSetQueryParams } from "@/shared/hooks/useSetQueryParams";
@@ -75,19 +75,17 @@ export default function Home() {
       {/* 콘텐츠 영역 */}
       <div className="px-4 py-4">
         <div className="pb-4 flex items-center gap-2">
-          <ModalSelector
+          <DropdownSelect
             options={sortOptions}
             value={currentSort}
             onChange={handleSortChange}
-            modalTitle="정렬"
           />
           {activeView === "all" && (
             <>
-              <ModalSelector
+              <DropdownSelect
                 options={folderOptions}
                 value={currentFolderId}
                 onChange={handleFolderChange}
-                modalTitle="폴더"
               />
               <button
                 onClick={handleFavoriteToggle}

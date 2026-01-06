@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Search, X } from "lucide-react";
 import Input from "@/shared/components/core/input";
-import ModalSelector from "@/shared/components/core/modal-selector";
+import DropdownSelect from "@/shared/components/dropdown/dropdown-select";
 import Button from "@/shared/components/core/button";
 import { useQueryParam } from "@/shared/hooks/useQueryParam";
 import { useSetQueryParams } from "@/shared/hooks/useSetQueryParams";
@@ -21,7 +21,9 @@ export default function SearchBar() {
   const modeParam = useQueryParam("mode", "all" as SearchMode);
 
   const [searchValue, setSearchValue] = useState(searchParam);
-  const [searchMode, setSearchMode] = useState<SearchMode>(modeParam as SearchMode);
+  const [searchMode, setSearchMode] = useState<SearchMode>(
+    modeParam as SearchMode
+  );
 
   const setParams = useSetQueryParams(["search", "mode"]);
 
@@ -60,11 +62,10 @@ export default function SearchBar() {
         {/* Search Bar */}
         <div className="relative flex items-center gap-2">
           {/* Mode Selector */}
-          <ModalSelector
+          <DropdownSelect
             options={searchModeOptions}
             value={searchMode}
             onChange={handleModeChange}
-            modalTitle="검색 범위"
           />
 
           {/* Search Input */}
