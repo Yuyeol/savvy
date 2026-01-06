@@ -59,7 +59,7 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
   const userId = await getUserId();
   const body = await request.json();
 
-  const { title, url, description, folder_id, is_favorite } = body;
+  const { title, url, description, folder_id, is_favorite, thumbnail, memo } = body;
 
   // 필수 필드 검증
   const validation = validateRequired(body, ["title", "url"]);
@@ -74,6 +74,8 @@ export const POST = withErrorHandler(async (request: NextRequest) => {
       description: description || null,
       folder_id: folder_id || null,
       is_favorite: is_favorite || false,
+      thumbnail: thumbnail || null,
+      memo: memo || null,
       user_id: userId,
     })
     .select()

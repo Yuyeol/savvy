@@ -2,6 +2,7 @@
 
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ExternalLink, MoreVertical } from "lucide-react";
 import Text from "@/shared/components/core/text";
 import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
@@ -67,11 +68,14 @@ export default function BookmarkDetailPage() {
   }
 
   const folder = folders.find((f) => f.id === bookmark.folder_id);
-  const formattedDate = new Date(bookmark.created_at).toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).replace(/\. /g, ".").replace(/\.$/, "");
+  const formattedDate = new Date(bookmark.created_at)
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\. /g, ".")
+    .replace(/\.$/, "");
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -113,6 +117,23 @@ export default function BookmarkDetailPage() {
           </Link>
         </div>
 
+        {/* 썸네일 */}
+        {bookmark.thumbnail && (
+          <div className="flex flex-col gap-2">
+            <Text variant="body-3" className="text-muted">
+              썸네일
+            </Text>
+            <div className="relative rounded-lg overflow-hidden border border-border-light h-48">
+              <Image
+                src={bookmark.thumbnail}
+                alt={bookmark.title}
+                className="object-cover"
+                fill
+              />
+            </div>
+          </div>
+        )}
+
         {/* 설명 */}
         {bookmark.description && (
           <div className="flex flex-col gap-2">
@@ -120,6 +141,16 @@ export default function BookmarkDetailPage() {
               설명
             </Text>
             <Text variant="body-2">{bookmark.description}</Text>
+          </div>
+        )}
+
+        {/* 메모 */}
+        {bookmark.memo && (
+          <div className="flex flex-col gap-2">
+            <Text variant="body-3" className="text-muted">
+              메모
+            </Text>
+            <Text variant="body-2">{bookmark.memo}</Text>
           </div>
         )}
 

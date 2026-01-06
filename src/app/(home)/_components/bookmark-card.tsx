@@ -133,6 +133,8 @@ export default function BookmarkCard({
                 src={thumbnail}
                 alt={title}
                 className="w-full h-full object-cover"
+                width={64}
+                height={64}
               />
             </div>
           )}

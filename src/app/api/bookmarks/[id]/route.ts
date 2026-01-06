@@ -34,7 +34,7 @@ export const PATCH = withErrorHandler(async (request: NextRequest, context?: Rou
   const { id } = await context!.params;
   const body = await request.json();
 
-  const { title, url, description, folder_id, is_favorite } = body;
+  const { title, url, description, folder_id, is_favorite, memo } = body;
 
   // 업데이트할 필드만 포함
   const updateData: Record<string, unknown> = {};
@@ -43,6 +43,7 @@ export const PATCH = withErrorHandler(async (request: NextRequest, context?: Rou
   if (description !== undefined) updateData.description = description;
   if (folder_id !== undefined) updateData.folder_id = folder_id;
   if (is_favorite !== undefined) updateData.is_favorite = is_favorite;
+  if (memo !== undefined) updateData.memo = memo;
 
   // 업데이트할 내용이 없으면 에러
   if (Object.keys(updateData).length === 0) {

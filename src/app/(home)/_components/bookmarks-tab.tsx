@@ -59,7 +59,7 @@ export default function BookmarksTab() {
               .replace(/\. /g, ".")
               .replace(/\.$/, "")}
             platform={new URL(bookmark.url).hostname}
-            thumbnail=""
+            thumbnail={bookmark.thumbnail || undefined}
             isFavorite={bookmark.is_favorite}
           />
         ))

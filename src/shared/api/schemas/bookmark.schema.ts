@@ -8,6 +8,8 @@ export const bookmarkSchema = z.object({
   description: z.string().nullable(),
   folder_id: z.string().nullable(),
   is_favorite: z.boolean(),
+  thumbnail: z.string().nullable(),
+  memo: z.string().nullable(),
   user_id: z.string(),
   created_at: z.string(),
   updated_at: z.string(),
@@ -20,6 +22,8 @@ export const bookmarkPostRequestSchema = z.object({
   description: z.string().optional(),
   folder_id: z.string().optional(),
   is_favorite: z.boolean().optional(),
+  thumbnail: z.string().optional(),
+  memo: z.string().optional(),
 });
 
 export const bookmarkPatchRequestSchema = z.object({
@@ -28,6 +32,7 @@ export const bookmarkPatchRequestSchema = z.object({
   description: z.string().optional(),
   folder_id: z.string().nullable().optional(),
   is_favorite: z.boolean().optional(),
+  memo: z.string().optional(),
 });
 
 // Response Schemas
