@@ -26,15 +26,15 @@
 - 커스텀 훅
 - 낙관적 업데이트
 
-### [Phase 4: 인증 및 프로필](phase4-auth-profile.md) ⏳
+### [Phase 4: 인증 및 프로필](phase4-auth-profile.md) ✅
 
 - Google OAuth 설정
 - 로그인 페이지
 - RLS 정책 업데이트
 - 마이페이지 (사용자 정보, 통계)
 
-### [Phase 5: 기능 고도화](phase5-feature-enhancement.md) ⏳
+### [Phase 5: 기능 고도화](phase5-feature-enhancement.md) ✅
 
-- OG 메타데이터 자동 추출
+- OG 메타데이터 자동 추출 (open-graph-scraper + Microlink API)
 - 썸네일 이미지 표시
 - URL 입력 시 자동 채우기
