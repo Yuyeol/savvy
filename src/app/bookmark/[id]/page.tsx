@@ -3,12 +3,12 @@
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ExternalLink, MoreVertical } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Text from "@/shared/components/core/text";
-import Dropdown, { DropdownOption } from "@/shared/components/core/dropdown";
 import { useGetBookmark } from "@/shared/hooks/queries/bookmarks/useGetBookmark";
-import { useDeleteBookmark } from "@/shared/hooks/queries/bookmarks/useDeleteBookmark";
 import { useGetFolders } from "@/shared/hooks/queries/folders/useGetFolders";
+import FavoriteButton from "@/shared/components/favorite-button";
+import MoreButton from "@/shared/components/more-button";
 
 export default function BookmarkDetailPage() {
   const router = useRouter();
@@ -21,35 +21,6 @@ export default function BookmarkDetailPage() {
     sort: null,
     order: null,
   });
-  const deleteBookmark = useDeleteBookmark();
-
-  const handleDelete = () => {
-    if (confirm("정말 삭제하시겠습니까?")) {
-      deleteBookmark.mutate(id, {
-        onSuccess: () => {
-          router.push("/");
-        },
-        onError: (error) => {
-          console.error("Failed to delete bookmark:", error);
-          alert("북마크 삭제에 실패했습니다.");
-        },
-      });
-    }
-  };
-
-  const dropdownOptions: DropdownOption[] = [
-    {
-      label: "수정",
-      value: "edit",
-      onClick: () => router.push(`/bookmark/${id}/edit`),
-    },
-    {
-      label: "삭제",
-      value: "delete",
-      variant: "danger",
-      onClick: handleDelete,
-    },
-  ];
 
   if (isLoading) {
     return (
@@ -79,24 +50,31 @@ export default function BookmarkDetailPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* 뒤로가기 + 제목 + 더보기 */}
+      {/* 헤더 */}
       <div className="p-4 border-b border-border-light">
-        <div className="flex items-start justify-between gap-2">
+        {/* 제목 + 즐겨찾기 + 더보기 */}
+        <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1">
             <Text variant="title-2">{bookmark.title}</Text>
           </div>
-          <Dropdown
-            trigger={
-              <button className="text-muted flex-shrink-0">
-                <MoreVertical size={20} />
-              </button>
-            }
-            options={dropdownOptions}
-          />
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <FavoriteButton bookmarkId={id} isFavorite={bookmark.is_favorite} />
+            <MoreButton
+              bookmarkId={id}
+              onDeleteSuccess={() => router.push("/")}
+            />
+          </div>
         </div>
-        <Text variant="body-3" className="text-muted">
-          {formattedDate}
-        </Text>
+        {/* 폴더 | 날짜 */}
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <Text variant="body-3" className="text-muted">
+            {folder?.name || "main"}
+          </Text>
+          <span>|</span>
+          <Text variant="body-3" className="text-muted">
+            {formattedDate}
+          </Text>
+        </div>
       </div>
 
       {/* 상세 정보 */}
@@ -153,14 +131,6 @@ export default function BookmarkDetailPage() {
             <Text variant="body-2">{bookmark.memo}</Text>
           </div>
         )}
-
-        {/* 폴더 */}
-        <div className="flex flex-col gap-2">
-          <Text variant="body-3" className="text-muted">
-            폴더
-          </Text>
-          <Text variant="body-2">{folder?.name || "미분류"}</Text>
-        </div>
       </div>
     </div>
   );
