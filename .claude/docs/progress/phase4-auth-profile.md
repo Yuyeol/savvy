@@ -1,13 +1,13 @@
 # Phase 4: 인증 및 프로필
 
-## 상태: 대기 중
+## 상태: 완료 ✅
 
 ---
 
 ## 4.1 Google OAuth 설정
 
-- [ ] Supabase Dashboard에서 Google Provider 활성화
-- [ ] Google Cloud Console OAuth 클라이언트 생성 및 연동
+- [x] Supabase Dashboard에서 Google Provider 활성화
+- [x] Google Cloud Console OAuth 클라이언트 생성 및 연동
 
 ---
 
@@ -15,14 +15,14 @@
 
 ### 백엔드
 
-- [ ] `get-user-id.ts` 리팩토링 (TEMP_USER_ID 제거, `auth.getUser()` 사용)
-- [ ] RLS 정책 업데이트 (`user_id = auth.uid()` - bookmarks, folders)
+- [x] `get-user-id.ts` 리팩토링 (TEMP_USER_ID 제거, `auth.getUser()` 사용)
+- [x] RLS 정책 업데이트 (`user_id = auth.uid()` - bookmarks, folders)
 
 ### 프론트엔드
 
-- [ ] `src/shared/api/auth.ts` 작성 (`signInWithGoogle`, `signOut`, `getUser`)
-- [ ] 로그인 페이지 (`/login`) - Google 로그인 버튼
-- [ ] 미들웨어 (`middleware.ts`) - 세션 검증, 비로그인 시 `/login` 리다이렉트
+- [x] `src/shared/api/auth.ts` 작성 (`signInWithGoogle`, `signOut`, `getUser`)
+- [x] 로그인 페이지 (`/login`) - Google 로그인 버튼
+- [x] 미들웨어 (`middleware.ts`) - 세션 검증, 비로그인 시 `/login` 리다이렉트
 
 ---
 
@@ -32,10 +32,10 @@
 src/app/profile/page.tsx
 ```
 
-- [ ] 사용자 정보 (프로필 이미지, 이름, 이메일)
-- [ ] 통계 (북마크 수, 폴더 수, 즐겨찾기 수)
-- [ ] 로그아웃 버튼
-- [ ] BottomNav에 프로필 탭 추가
+- [x] 사용자 정보 (프로필 이미지, 이름, 이메일)
+- [x] 통계 (북마크 수, 폴더 수, 즐겨찾기 수)
+- [x] 로그아웃 버튼
+- [x] BottomNav에 프로필 탭 추가
 
 ---
 
