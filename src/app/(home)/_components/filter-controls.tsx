@@ -14,6 +14,7 @@ export default function FilterControls() {
     search: null,
     sort: null,
     order: null,
+    is_favorite: null,
   });
 
   const currentSort = useQueryParam("sort", "latest") as SortType;
@@ -71,23 +72,23 @@ export default function FilterControls() {
         onChange={handleSortChange}
       />
       {activeView === "all" && (
-        <>
-          <DropdownSelect
-            options={folderOptions}
-            value={currentFolderId}
-            onChange={handleFolderChange}
-          />
-          <button
-            onClick={handleFavoriteToggle}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-              isFavoriteFilter
-                ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-700"
-                : "bg-background text-foreground border border-border-light"
-            }`}
-          >
-            ⭐ 즐겨찾기
-          </button>
-        </>
+        <DropdownSelect
+          options={folderOptions}
+          value={currentFolderId}
+          onChange={handleFolderChange}
+        />
+      )}
+      {(activeView === "all" || activeView === "folders") && (
+        <button
+          onClick={handleFavoriteToggle}
+          className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            isFavoriteFilter
+              ? "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-300 dark:border-yellow-700"
+              : "bg-background text-foreground border border-border-light"
+          }`}
+        >
+          ⭐ 즐겨찾기
+        </button>
       )}
     </div>
   );

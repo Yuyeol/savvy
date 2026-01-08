@@ -6,6 +6,7 @@ export function useGetFolders(params: {
   search: string | null;
   sort: string | null;
   order: "asc" | "desc" | null;
+  is_favorite: boolean | null;
 }) {
   return useQuery({
     queryKey: folderKeys.list(params),
