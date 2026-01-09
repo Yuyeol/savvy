@@ -12,6 +12,7 @@ import UrlInput from "@/app/bookmark/_components/url-input";
 import Button from "@/shared/components/core/button";
 import { useGetBookmark } from "@/shared/hooks/queries/bookmarks/useGetBookmark";
 import { usePatchBookmark } from "@/shared/hooks/queries/bookmarks/usePatchBookmark";
+import dynamic from "next/dynamic";
 
 interface BookmarkFormData {
   url: string;
@@ -21,7 +22,7 @@ interface BookmarkFormData {
   folderId?: string;
 }
 
-export default function BookmarkEditPage() {
+function BookmarkEditPage() {
   const router = useRouter();
   const params = useParams();
   const bookmarkId = params.id as string;
@@ -172,3 +173,7 @@ export default function BookmarkEditPage() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(BookmarkEditPage), {
+  ssr: false,
+});

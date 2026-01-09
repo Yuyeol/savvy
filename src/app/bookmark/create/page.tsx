@@ -11,6 +11,7 @@ import CreateFolderButton from "@/app/bookmark/_components/create-folder-button"
 import UrlInput from "@/app/bookmark/_components/url-input";
 import Button from "@/shared/components/core/button";
 import { usePostBookmark } from "@/shared/hooks/queries/bookmarks/usePostBookmark";
+import dynamic from "next/dynamic";
 
 interface BookmarkFormData {
   url: string;
@@ -20,7 +21,7 @@ interface BookmarkFormData {
   folderId?: string;
 }
 
-export default function BookmarkCreatePage() {
+function BookmarkCreatePage() {
   const router = useRouter();
   const postBookmark = usePostBookmark();
   const [thumbnail, setThumbnail] = useState<string | null>(null);
@@ -137,3 +138,7 @@ export default function BookmarkCreatePage() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(BookmarkCreatePage), {
+  ssr: false,
+});

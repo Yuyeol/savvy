@@ -1,8 +1,21 @@
+import dynamic from "next/dynamic";
 import SearchBar from "@/app/(home)/_components/search-bar";
 import ViewTabs from "@/app/(home)/_components/view-tabs";
-import FoldersTab from "@/app/(home)/_components/folders-tab";
-import BookmarksTab from "@/app/(home)/_components/bookmarks-tab";
-import FilterControls from "@/app/(home)/_components/filter-controls";
+
+const FoldersTab = dynamic(
+  () => import("@/app/(home)/_components/folders-tab"),
+  {
+    ssr: false,
+  }
+);
+const BookmarksTab = dynamic(
+  () => import("@/app/(home)/_components/bookmarks-tab"),
+  { ssr: false }
+);
+const FilterControls = dynamic(
+  () => import("@/app/(home)/_components/filter-controls"),
+  { ssr: false }
+);
 
 interface HomeProps {
   searchParams: { view?: string };

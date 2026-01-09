@@ -9,8 +9,9 @@ import { useGetBookmark } from "@/shared/hooks/queries/bookmarks/useGetBookmark"
 import { useGetFolders } from "@/shared/hooks/queries/folders/useGetFolders";
 import FavoriteButton from "@/shared/components/favorite-button";
 import MoreButton from "@/shared/components/more-button";
+import dynamic from "next/dynamic";
 
-export default function BookmarkDetailPage() {
+function BookmarkDetailPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -141,3 +142,7 @@ export default function BookmarkDetailPage() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(BookmarkDetailPage), {
+  ssr: false,
+});

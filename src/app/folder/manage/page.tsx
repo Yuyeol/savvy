@@ -1,5 +1,12 @@
+import dynamic from "next/dynamic";
 import FolderInput from "@/app/folder/manage/_components/folder-input";
-import FolderList from "@/app/folder/manage/_components/folder-list";
+
+const FolderList = dynamic(
+  () => import("@/app/folder/manage/_components/folder-list"),
+  {
+    ssr: false,
+  }
+);
 
 export default function FolderManagePage() {
   return (
